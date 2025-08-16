@@ -1,0 +1,75 @@
+/* statusBar.css */
+
+/* 状态栏 (浮动模式) */
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1003; 
+}
+
+/* 状态栏右侧图标布局 */
+.status-bar-icons-right {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 图标之间的间距 */
+}
+
+#model-status-key {
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+/* 电池胶囊样式 */
+.battery-capsule {
+    width: 35px;
+    height: 13px;
+    border: 1.5px solid var(--text-primary);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #FFC1C6, #98BADA); 
+}
+
+.battery-capsule::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.5px;
+    height: 5px;
+    background-color: var(--text-primary);
+    border-radius: 1px;
+}
+
+.battery-liquid {
+    position: absolute;
+    right: 0; 
+    top: 0;
+    bottom: 0;
+    width: 0%;
+    background-color: rgba(193, 195, 198, 1);
+    transition: width 0.5s ease-in-out;
+    border-radius: 0 10px 10px 0;
+}
+
+.battery-level-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+    top: -1px;
+}
