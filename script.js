@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('status-bar-container');
             if (container) {
                 container.innerHTML = html;
+                // [修改] 在HTML加载完成后，发送一个自定义事件通知
+                document.dispatchEvent(new CustomEvent('statusBarLoaded'));
             }
         });
 
