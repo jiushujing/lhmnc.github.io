@@ -1,5 +1,7 @@
 // statusBar.js
-document.addEventListener('DOMContentLoaded', () => {
+
+// [修改] 将 'DOMContentLoaded' 替换为 'statusBarLoaded'
+document.addEventListener('statusBarLoaded', () => {
     // 1. 获取状态栏所需的元素
     const timeElement = document.getElementById('status-bar-time');
     const batteryLiquid = document.getElementById('battery-capsule-liquid');
@@ -64,4 +66,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 关键：监听从主脚本发来的通知，当API设置变化时更新钥匙状态
     document.addEventListener('apiSettingsUpdated', updateModelStatusKey);
-});
+}); // [修改] 确保这里是 'statusBarLoaded' 事件的闭合括号
