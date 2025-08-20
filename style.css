@@ -1,0 +1,2018 @@
+/* 全局样式和变量 */
+:root {
+    --bg-color: #F5F5F7;
+    --primary-blue: #007AFF;
+    --text-primary: #000000;
+    --text-secondary: #8E8E93;
+    --border-color: #E5E5EA;
+    --white-color: #FFFFFF;
+    --vip-gold: #FFCA28;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #CCCCCC;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    max-height: 880px;
+    background-color: var(--bg-color);
+    border-radius: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 状态栏 (浮动模式) */
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1003; 
+}
+
+/* ======== 电池胶囊样式 (逆向逻辑版) ======== */
+.battery-capsule {
+    width: 35px;
+    height: 13px;
+    border: 1.5px solid var(--text-primary);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #FFC1C6, #98BADA); 
+}
+
+.battery-capsule::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.5px;
+    height: 5px;
+    background-color: var(--text-primary);
+    border-radius: 1px;
+}
+
+.battery-liquid {
+    position: absolute;
+    right: 0; 
+    top: 0;
+    bottom: 0;
+    width: 0%;
+    background-color: rgba(193, 195, 198, 1);
+    transition: width 0.5s ease-in-out;
+    border-radius: 0 10px 10px 0;
+}
+
+.battery-level-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+    top: -1px;
+}
+
+/* 侧边栏样式 */
+.sidebar-menu { position: absolute; top: 0; left: 0; bottom: 0; width: 90%; z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease-in-out; display: flex; flex-direction: column; background-color: #F8F9FA; }
+.sidebar-background { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://i.imgur.com/rNnL5aR.jpg'); background-size: cover; background-position: center; opacity: 0.3; z-index: -1; }
+.sidebar-content { padding: 20px; padding-top: 50px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; }
+.sidebar-top-actions { display: flex; justify-content: flex-start; gap: 10px; margin-bottom: 20px; }
+.sidebar-top-actions .action-btn { background-color: #E9ECEF; color: #495057; border: none; border-radius: 20px; padding: 6px 12px; font-size: 12px; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+.sidebar-top-actions .action-btn:last-child { margin-left: auto; }
+.sidebar-profile-card { 
+    background-color: var(--white-color); 
+    border-radius: 10px; 
+    padding: 15px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.profile-info { display: flex; align-items: center; }
+#sidebar-profile-link { cursor: pointer; }
+.profile-info .avatar { width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--border-color); flex-shrink: 0; }
+.profile-details { flex-grow: 1; margin-left: 15px; }
+.profile-name { font-weight: 500; font-size: 16px; color: var(--text-primary); }
+.persona-switcher {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+.persona-switcher i { font-size: 12px; margin-right: 4px; }
+.profile-status { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.profile-info > .fa-chevron-right { color: var(--text-secondary); }
+.sidebar-nav-list { background-color: var(--white-color); border-radius: 10px; margin-top: 15px; padding: 5px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.sidebar-nav-list .nav-item { display: flex; align-items: center; padding: 15px; text-decoration: none; color: var(--text-primary); font-size: 15px; }
+.nav-item > i:first-child { width: 30px; color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; }
+.nav-item span { flex-grow: 1; margin-left: 10px; }
+.nav-item > i:last-child { color: var(--text-secondary); font-size: 12px; }
+.sidebar-bottom-actions { margin-top: auto; display: flex; justify-content: flex-start; gap: 40px; padding: 10px; }
+.sidebar-bottom-actions button { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); transition: color 0.2s; }
+.sidebar-bottom-actions button:hover { color: var(--text-primary); }
+.sidebar-bottom-actions button i { font-size: 20px; margin-bottom: 8px; }
+.sidebar-bottom-actions button span { font-size: 12px; }
+.sidebar-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.3); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+
+/* 主内容区包裹器 */
+.main-content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    position: relative;
+    transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+    width: 100%;
+    height: 100%;
+    padding-top: 32px;
+    box-sizing: border-box;
+}
+
+/* 侧边栏打开时的状态 */
+.app-container.sidebar-open .sidebar-menu { transform: translateX(0); }
+.app-container.sidebar-open .sidebar-overlay { opacity: 1; visibility: visible; }
+.app-container.sidebar-open .main-content-wrapper { transform: translateX(90%); border-radius: 10px; overflow: hidden; box-shadow: -5px 0px 20px rgba(0,0,0,0.2); }
+
+/* 页面通用头部 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    position: relative; /* <-- 新增这一行！ */
+}
+.user-info { display: flex; align-items: center; }
+.user-info .avatar { width: 36px; height: 36px; border-radius: 50%; margin-right: 10px; }
+.user-details-header { display: flex; flex-direction: column; justify-content: center; }
+.header-username { font-size: 18px; font-weight: 500; color: var(--text-primary); line-height: 1.2; }
+.header-status { font-size: 11px; color: var(--text-secondary); margin-top: 4px; display: flex; align-items: center; }
+.header-status i { margin-right: 4px; }
+.page-title { font-size: 22px; font-weight: 500; }
+.header-actions { display: flex; align-items: center; gap: 15px; }
+.header-actions i {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 600;
+}
+.header-actions .fa-ellipsis-vertical { position: relative; left: 2px; }
+.header-actions .fa-gear { position: relative; top: 1px; }
+
+/* 搜索框通用样式 */
+.search-bar { background-color: var(--white-color); border-radius: 8px; padding: 8px 15px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); }
+.search-bar i { margin-right: 8px; }
+.messages-search-bar { margin: 0 15px 10px; }
+.contacts-search-bar { margin: 10px 15px 10px; }
+
+/* 主内容区域 */
+.main-content { flex: 1; overflow-y: auto; position: relative; }
+.page { display: none; height: 100%; flex-direction: column; }
+.page.active { display: flex; }
+
+/* 消息页面列表 */
+.chat-list { flex: 1; overflow-y: auto; }
+.chat-item { display: flex; align-items: center; padding: 10px 15px; background-color: var(--white-color); }
+.chat-item:not(:last-child) { border-bottom: 1px solid var(--border-color); }
+.chat-item img, .chat-item .avatar-group-logo { width: 50px; height: 50px; border-radius: 50%; margin-right: 12px; flex-shrink: 0; }
+.avatar-group-logo { background-color: #F0AD4E; color: var(--white-color); display: flex; align-items: center; justify-content: center; font-weight: 500; }
+.chat-details { flex-grow: 1; overflow: hidden; }
+.chat-title { font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
+.chat-message { font-size: 14px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-meta { font-size: 12px; color: var(--text-secondary); text-align: right; white-space: nowrap; }
+.chat-meta i { font-size: 12px; margin-left: 4px; }
+.vip { background: linear-gradient(to right, #fce5b3, #e4a55d); color: #6c4f2f; font-size: 10px; padding: 1px 5px; border-radius: 8px; font-weight: 500; }
+
+/* 角色页面列表 */
+.contact-groups { padding: 0; }
+.contact-groups .group-item { background-color: var(--white-color); border-radius: 0; margin-bottom: 0; }
+.group-item .group-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; font-size: 14px; }
+.group-header div { display: flex; align-items: center; }
+.group-header i { margin-right: 10px; color: var(--text-secondary); }
+.group-header span { color: var(--text-secondary); }
+.contact-tabs { display: flex; padding: 0; background-color: var(--white-color); border-bottom: 1px solid var(--border-color); margin-top: 10px; border-radius: 0; }
+.contact-tab-btn { background: none; border: none; font-size: 16px; color: var(--text-secondary); cursor: pointer; padding: 15px; position: relative; transition: color 0.3s; }
+.contact-tab-btn.active { color: var(--primary-blue); font-weight: 500; }
+.contact-tab-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 30px; height: 3px; background-color: var(--primary-blue); border-radius: 2px; }
+.contact-tab-content { display: none; }
+.contact-tab-content.active { display: block; background-color: var(--white-color); }
+
+/* 动态 & 小工具页面 通用网格样式 */
+.actions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background-color: var(--white-color); padding: 20px 10px; border-radius: 8px; text-align: center; }
+.action-item span { font-size: 12px; display: block; color: var(--text-secondary); }
+/* [修改] 为 actions-grid 中的项目添加交互样式 */
+/* [修改] 为 actions-grid 中的项目添加交互样式 (V2 - 文字变蓝) */
+.actions-grid .action-item {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.actions-grid .action-item:hover {
+    transform: scale(1.05);
+}
+
+.actions-grid .action-item:active {
+    transform: scale(0.98);
+}
+
+.action-item span {
+    font-size: 12px;
+    display: block;
+    color: var(--text-secondary);
+    transition: color 0.2s ease; /* 为文字颜色变化添加平滑过渡 */
+}
+
+/* 当鼠标悬停或点击 action-item 时，只改变其内部 span 的颜色 */
+.actions-grid .action-item:hover span,
+.actions-grid .action-item:active span {
+    color: var(--primary-blue);
+}
+
+.action-item i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.action-item .fa-image { color: #4CAF50; }
+.action-item .fa-comment-dots { color: #2196F3; }
+.action-item .fa-grip { color: #9E9E9E; }
+.action-item .fa-book-open { color: #FFC107; }
+  .fa-music { color: #FB6461; }
+.action-item .fa-egg { color: #F7A2BB; }
+.action-item .fa-leaf { color: #8BC34A; }
+.action-item .fa-paw { color: #A1887F; }
+.action-item .fa-utensils { color: #607D8B; }
+.action-item .fa-user-secret { color: #424242; }
+.action-item .fa-moon { color: #3F51B5; }
+.action-item .fa-comments { color: #009688; }
+.action-item .fa-plane { color: #03A9F4; }
+.action-item .fa-hourglass-half { color: #885FC4; }
+.action-item .fa-book-journal-whills { color: #B77B60; }
+.action-item .fa-users-line { color: #2196F3; }
+.action-item .fa-map-pin { color: #92C5C6; }
+
+/* 动态页特定样式 */
+.feed-content { flex: 1; overflow-y: auto; padding: 0 15px; }
+.feed-profile-banner { display: flex; align-items: center; background-color: var(--white-color); padding: 15px; border-radius: 8px; margin-top: 10px; }
+.feed-profile-banner .avatar { width: 45px; height: 45px; border-radius: 50%; margin-right: 12px; }
+.feed-user-info { flex-grow: 1; }
+.feed-user-info span { display: block; }
+.feed-user-info span:first-child { font-size: 18px; font-weight: 400; }
+.feed-profile-banner > i { color: var(--text-secondary); }
+.actions-grid { margin-top: 15px; }
+.feed-card { background-color: var(--white-color); border-radius: 8px; margin-top: 15px; padding: 15px; }
+.feed-card-header { display: flex; align-items: flex-start; }
+.feed-card-header img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
+.author-info { flex-grow: 1; }
+.author-name { font-weight: 400; }
+.post-time { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.feed-card-header > i { color: var(--text-secondary); }
+.feed-card-body p { margin: 10px 0; font-size: 15px; line-height: 1.5; }
+.shared-content { background-color: var(--bg-color); padding: 10px; border-radius: 6px; font-size: 14px; color: var(--text-secondary); }
+
+/* 小工具页面样式 */
+.tools-page-content { flex: 1; overflow-y: auto; padding: 0 15px 15px; }
+.tool-category-title { font-size: 14px; color: var(--text-secondary); padding-left: 5px; margin: 20px 0 10px; }
+.tool-category:first-child .tool-category-title { margin-top: 10px; }
+
+/* 长生树页面样式 */
+.tree-container { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #8BC34A; }
+.tree-container i { font-size: 100px; }
+.tree-container p { margin-top: 20px; font-size: 16px; color: var(--text-secondary); }
+
+/* 底部导航 */
+.bottom-nav { display: flex; justify-content: space-around; align-items: center; background-color: #FDFDFD; border-top: 1px solid var(--border-color); padding: 5px 0; height: 45px; flex-shrink: 0; }
+.nav-button { background: none; border: none; color: var(--text-secondary); cursor: pointer; position: relative; padding: 0 10px; height: 100%; display: flex; align-items: center; }
+.nav-button i { font-size: 22px; margin-bottom: 0; }
+.nav-button.active { color: var(--primary-blue); }
+
+/* 为所有可以打开侧边栏的元素添加点击手势 */
+.js-open-sidebar {
+    cursor: pointer;
+}
+
+/* ======== 用户设置页面样式 (滑动版) ======== */
+.page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    z-index: 1002;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-overlay.active {
+    transform: translateX(0);
+}
+
+.user-settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    padding-top: 45px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.user-settings-header span {
+    font-size: 17px;
+    font-weight: 600;
+}
+.user-settings-header i {
+    font-size: 18px;
+    cursor: pointer;
+    width: 25px;
+    text-align: center;
+    transition: opacity 0.2s, transform 0.2s; /* 新增: 为交互效果添加过渡 */
+}
+
+.user-settings-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.user-settings-tags {
+    margin-bottom: 20px;
+}
+.user-settings-tags .tag {
+    display: inline-block;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 5px 12px;
+    font-size: 13px;
+    margin-right: 10px;
+}
+.user-settings-tags .add-tag {
+    color: var(--text-secondary);
+}
+
+/* ==================== [MODIFIED START] ==================== */
+/* 新的用户信息编辑卡片样式 */
+.profile-edit-card {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* 调整头像和信息区的间距 */
+    padding: 15px;
+    margin-bottom: 25px;
+    margin-top: -10px;
+}
+
+.profile-edit-card .profile-avatar {
+    width: 120px;
+    height: 120px;
+    padding: 15px 8px 15px 12px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.profile-edit-card .profile-details-inputs {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    align-items: center;
+}
+
+.profile-edit-card .input-row {
+    display: flex;
+    gap: 20px; /* 调整标签和输入框的间距 */
+    align-items: center;
+}
+
+.profile-edit-card .input-row label {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    flex-shrink: 0; /* 防止标签文字被压缩 */
+}
+
+.profile-edit-card .input-row input {
+    border: none;
+    background: none;
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--text-secondary);
+    padding: 2px 0;
+    width: 80px;
+}
+
+.profile-edit-card .input-row input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+.profile-edit-card .input-row input:focus {
+    outline: none;
+    color: var(--text-primary);
+}
+/* ==================== [MODIFIED END] ==================== */
+
+.settings-card {
+    background-color: var(--white-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.settings-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+.settings-card-header i {
+    margin-right: 8px;
+    color: var(--text-secondary);
+}
+.settings-card-header > i:last-child {
+    margin-right: 0;
+}
+
+.settings-card-body textarea,
+.settings-card-body input[type="text"] {
+    width: 100%;
+    border: none;
+    background: none;
+    border-radius: 3px;
+    padding: 0;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-primary);
+    resize: none;
+}
+.settings-card-body textarea {
+    height: 60px;
+}
+
+.settings-card-body textarea:focus,
+.settings-card-body input[type="text"]:focus {
+    outline: 2px solid #43A1DB;     
+    outline-offset: 5px;
+}
+
+.settings-nav-group {
+    background-color: var(--white-color);
+    border-radius: 10px;
+}
+.settings-nav-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    font-size: 15px;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+.settings-nav-item:not(:last-child) {
+    border-bottom: 1px solid var(--bg-color);
+}
+.settings-nav-item i {
+    margin-right: 8px;
+    color: var(--text-secondary);
+}
+.settings-nav-item > i:last-child {
+    margin-right: 0;
+    font-size: 12px;
+}
+/* 只调整加号图标的粗细 */
+.header-actions .fa-plus {
+    font-weight: 500; /* 或者 bold */
+}
+
+/* ======== 数据管理页面样式 ======== */
+.data-actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.data-action-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 18px 15px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s;
+}
+
+.data-action-item:hover {
+    background-color: #f0f0f0;
+}
+
+.data-action-item i {
+    font-size: 18px;
+    color: var(--text-secondary);
+    width: 20px;
+    text-align: center;
+}
+
+.data-action-item.disabled {
+    color: var(--text-secondary);
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+.data-action-item.disabled:hover {
+    background-color: #f9f9f9;
+}
+
+/* 新增: 为用户设置保存按钮添加交互效果 */
+#user-settings-save-btn:hover {
+    opacity: 0.7;
+}
+#user-settings-save-btn:active {
+    transform: scale(0.9);
+}
+/* =============================================================== */
+/* ============= 新增: 天气和定位模态框 (Modal) 样式 ============= */
+/* =============================================================== */
+
+/* 模态框遮罩层容器 */
+.modal-overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay-container.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 模态框面板 */
+.modal-panel {
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 380px;
+    max-height: 90vh;
+    display: none; /* 默认隐藏，由 JS 控制显示哪个 */
+    flex-direction: column;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay-container.visible .modal-panel.visible {
+    display: flex;
+    transform: scale(1);
+}
+
+/* 模态框头部 */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+
+/* 模态框内容区 */
+.modal-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* 模态框底部 */
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.modal-action-btn {
+    width: 100%;
+    background-color: var(--primary-blue);
+    color: var(--white-color);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-action-btn:hover {
+    background-color: #0056b3;
+}
+
+/* --- 天气模态框特定样式 --- */
+.weather-grid {
+    display: grid;
+    /* 修改: 将布局改为固定的 3 列 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.weather-option-btn {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.weather-option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.weather-option-btn.active {
+    border-color: var(--primary-blue);
+    background-color: #e6f2ff;
+    box-shadow: 0 0 0 2px var(--primary-blue);
+}
+
+.weather-option-btn.add-new {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* --- 定位模态框特定样式 --- */
+#location-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.location-card {
+    background-color: var(--white-color);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.location-card .input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.location-card label {
+    font-size: 14px;
+    color: var(--text-primary);
+    width: 40px; /* 固定标签宽度，让输入框对齐 */
+    flex-shrink: 0;
+}
+
+.location-card input {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 5px 0;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.location-card input:focus {
+    outline: none;
+    border-bottom-color: var(--primary-blue);
+}
+
+.location-card-actions {
+    text-align: right;
+    margin-top: 5px;
+}
+
+.location-delete-btn {
+    background: none;
+    border: none;
+    color: #ff3b30;
+    cursor: pointer;
+    font-size: 13px;
+}
+/* =============================================================== */
+/* ================= 新增: 定位卡片选中/删除样式 ================= */
+/* =============================================================== */
+
+/* 将卡片底部动作区改为 flex 布局，以便分别对齐 */
+.location-card-actions {
+    display: flex;
+    justify-content: space-between; /* 删除按钮在左，选中标记在右 */
+    align-items: center;
+    margin-top: 5px;
+}
+
+/* 选中指示器样式 */
+.location-select-indicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+/* 选中时的样式 */
+.location-select-indicator.selected {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: var(--white-color);
+}
+
+/* 指示器里的对勾图标，默认不显示 */
+.location-select-indicator .fa-check {
+    font-size: 14px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease;
+}
+
+/* 选中时显示对勾图标 */
+.location-select-indicator.selected .fa-check {
+    opacity: 1;
+    transform: scale(1);
+}
+/* =============================================================== */
+/* ==================== 新增: 用户状态模态框样式 ================== */
+/* =============================================================== */
+
+/* 让消息页面的状态区域可点击 */
+#header-status-trigger {
+    cursor: pointer;
+}
+
+/* 状态网格布局 (4列) */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* 状态选项按钮样式 */
+.status-option-btn {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    /* --- 核心修改从这里开始 --- */
+    display: flex;
+    flex-direction: column; /* 1. 强制内部元素垂直排列 */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 40px;
+    padding: 4px 1px; /* 2. 调整内边距，给文字更多空间 */
+    line-height: 1.25; /* 3. 调整行高，让两行文字更紧凑 */
+}
+
+.status-option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.status-option-btn.active {
+    border-color: var(--primary-blue);
+    background-color: var(--primary-blue);
+    color: var(--white-color);
+    font-weight: 500;
+}
+
+.status-option-btn.add-new {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+/* =============================================================== */
+/* ================== 新增: 消息页头部弹出菜单 ================== */
+/* =============================================================== */
+
+/* 弹出菜单容器 */
+.popover-menu {
+    position: absolute;
+    top: 55px; /* 菜单距离顶部的距离 */
+    right: 10px; /* 菜单距离右侧的距离 */
+    background-color: var(--white-color);
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 1005; /* 确保在最上层 */
+    width: 160px;
+    padding: 8px 0;
+    
+    /* 默认隐藏，并设置动画初始状态 */
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95) translateY(-10px);
+    transform-origin: top right;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+/* 菜单可见时的状态 */
+.popover-menu.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+/* 菜单顶部的小三角 */
+.popover-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 14px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid var(--white-color);
+}
+
+/* 菜单项 */
+.popover-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.popover-item:hover {
+    background-color: #f0f0f0;
+}
+
+.popover-item i {
+    font-size: 16px;
+    width: 20px;
+    margin-right: 12px;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.popover-item span {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+/* =============================================================== */
+/* =================== 新增: API 设置页面样式 ================== */
+/* =============================================================== */
+
+/* API 设置页面的内容区域，继承通用样式 */
+#page-api-settings .user-settings-content {
+    padding: 15px 25px 25px; /* 微调内边距 */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f8f9fa;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.form-group input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.api-presets {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.preset-button {
+    flex-grow: 1;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+    background-color: var(--white-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.preset-button.active {
+    background-color: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+    font-weight: 500;
+}
+
+.action-button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+}
+.action-button:hover {
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.btn-group {
+    margin-top: 25px;
+}
+
+#fetch-models-button {
+    background-color: #fff;
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+    margin-bottom: 10px;
+}
+
+#fetch-models-button:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    border-color: #ced4da;
+    cursor: not-allowed;
+}
+/* =============================================================== */
+/* =================== 新增: 通用占位符文本样式 ================== */
+/* =============================================================== */
+.placeholder-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 2px 0; /* 模拟输入框的细微边距 */
+}
+/* =============================================================== */
+/* =================== API 管理页面按钮布局更新 ================== */
+/* =============================================================== */
+
+/* 按钮网格布局 */
+.api-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+/* 更新 "拉取模型" 按钮样式 */
+#fetch-models-button-new {
+    background-color: var(--white-color);
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+}
+#fetch-models-button-new:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    border-color: #ced4da;
+    cursor: not-allowed;
+}
+
+/* 新建配置按钮样式 */
+#btn-new-config {
+    background-color: var(--white-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+/* =============================================================== */
+/* ================== API 页面 Header 图标样式 (修正) =================== */
+/* =============================================================== */
+
+/* 为新的删除图标设置字体颜色为红色 */
+#page-api-settings #btn-delete-config {
+    color: #ff3b30;
+}
+
+/* 确保保存图标是默认的黑色 */
+#page-api-settings #btn-save-config {
+    color: var(--text-primary);
+}
+
+/* 为新的保存图标添加点击反馈效果 */
+#page-api-settings #btn-save-config:active {
+    transform: scale(0.9);
+}
+
+/* =============================================================== */
+/* =================== 新增: 状态栏右侧图标布局 ================== */
+/* =============================================================== */
+.status-bar-icons-right {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 图标之间的间距 */
+}
+
+#model-status-key {
+    font-size: 13px;
+    color: var(--text-primary);
+}
+/* =============================================================== */
+/* ==================== 新增: 角色分组展开样式 ================== */
+/* =============================================================== */
+
+/* 角色列表默认隐藏 */
+.contact-list {
+    display: none;
+    padding-left: 15px; /* 添加一些缩进 */
+}
+
+/* 当分组项拥有 .open 类时，显示其下的角色列表 */
+.group-item.open .contact-list {
+    display: block;
+}
+
+/* 当分组展开时，旋转右箭头图标 */
+.group-item.open .group-header .fa-chevron-right {
+    transform: rotate(90deg);
+    transition: transform 0.2s ease-in-out;
+}
+
+.group-header .fa-chevron-right {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* 给分组头部添加点击手势 */
+.group-item .group-header {
+    cursor: pointer;
+}
+
+/* 角色列表中的条目样式，可以复用 chat-item 的边框逻辑 */
+.contact-list .chat-item:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+.contact-list .chat-item:last-child {
+    padding-bottom: 5px; /* 给最后一个条目一点空间 */
+}
+.contact-list .chat-item {
+    padding: 10px 15px 10px 0; /* 调整内边距，因为父级已经有左内边距了 */
+}
+/* style.css */
+
+/* ... 在 profile-edit-card 相关样式附近或文件末尾添加 ... */
+
+/* [新增] 为角色设置页面的头像添加点击手势 */
+#page-character-settings .profile-avatar {
+    cursor: pointer;
+}
+/* style.css */
+
+/* =============================================================== */
+/* ==================== 新增: 图片剪裁模态框样式 ================= */
+/* =============================================================== */
+
+/* 剪裁器图片容器 */
+.cropper-image-container {
+    width: 100%;
+    height: 300px; /* 给一个固定的高度 */
+    background-color: #e9ecef;
+    margin-bottom: 15px;
+}
+
+/* 待剪裁的图片样式 */
+#image-to-crop {
+    display: block;
+    max-width: 100%; /* 确保图片不会超出容器 */
+}
+
+/* 剪裁器底部按钮区域 */
+.cropper-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+/* style.css */
+
+/* [新增] 为用户设置页面的头像添加点击手势 */
+#page-user-settings .profile-avatar {
+    cursor: pointer;
+}
+/* style.css */
+
+/* =============================================================== */
+/* =================== 新增: 用户多身份配置样式 ================== */
+/* =============================================================== */
+
+/* 用户设置页头部右侧的按钮容器 */
+.user-settings-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* 调整删除和保存按钮的间距 */
+}
+
+/* 删除按钮的特定样式 */
+#user-settings-delete-btn {
+    color: #ff3b30; /* 危险操作红色 */
+    display: none; /* 默认隐藏，仅在非默认身份时显示 */
+}
+
+/* 身份标签激活时的样式 */
+.user-settings-tags .tag.active {
+    background-color: var(--primary-blue);
+    color: var(--white-color);
+    border-color: var(--primary-blue);
+}
+
+/* 给所有标签添加手势，除了添加按钮 */
+.user-settings-tags .tag:not(.add-tag) {
+    cursor: pointer;
+}
+/* =============================================================== */
+/* ==================== 新增: 注入管理页面样式 ================== */
+/* =============================================================== */
+
+.inject-settings-card {
+    padding: 5px 15px; /* 调整内边距让布局更紧凑 */
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item label {
+    font-size: 15px;
+    color: var(--text-primary);
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.setting-item .short-input,
+.setting-item select {
+    border: none;
+    background: none;
+    text-align: right;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--text-secondary);
+    width: 100px; /* 给一个固定宽度 */
+}
+.setting-item .short-input:focus,
+.setting-item select:focus {
+    outline: none;
+    color: var(--text-primary);
+}
+
+.slider-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+/* 自定义滑动条样式 */
+.slider-control input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: opacity .2s;
+}
+
+.slider-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--primary-blue);
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid var(--white-color);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.slider-value-input {
+    width: 60px;
+    padding: 5px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 14px;
+    -moz-appearance: textfield; /* 隐藏 Firefox 的上下箭头 */
+}
+.slider-value-input::-webkit-outer-spin-button,
+.slider-value-input::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* 隐藏 Chrome/Safari 的上下箭头 */
+    margin: 0;
+}
+/* ==================== 新增: 注入管理页面样式 ================== */
+/* ... */
+
+.setting-item label {
+    font-size: 15px;
+    color: var(--text-primary);
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+/* [修改] 扩展选择器，让样式同时应用于 .settings-nav-item 内的控件 */
+.setting-item .short-input,
+.setting-item select,
+.settings-nav-item select {
+    border: none;
+    background: none;
+    text-align: right;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--text-secondary);
+    width: 100px; /* 给一个固定宽度 */
+}
+/* [修改] 扩展选择器 */
+.setting-item .short-input:focus,
+.setting-item select:focus,
+.settings-nav-item select:focus {
+    outline: none;
+    color: var(--text-primary);
+}
+
+/* ... */
+
+/* ============= 注入管理页面滑动条 UI V2 (新样式) ============== */
+/* ... */
+
+/* [删除] 移除之前为第二个卡片添加的边框规则，因为它现在由 .settings-nav-item 的样式自动处理 */
+/* .inject-settings-card .setting-item:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+} */
+
+/* 新的滑动条滑块样式 (V3 - 纤细版) */
+.setting-item-vertical input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;  /* <-- 修改点：滑块变小 */
+    height: 16px; /* <-- 修改点：滑块变小 */
+    background: var(--primary-blue);
+    cursor: pointer;
+    border-radius: 50%;
+    border: none; /* <-- 修改点：移除白色边框 */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+/* =============================================================== */
+/* ============= [修复] 注入管理页面 V2 垂直滑块布局样式 ============= */
+/* =============================================================== */
+
+/* 单个垂直设置项的容器 */
+.setting-item-vertical {
+    display: flex;
+    flex-direction: column; /* 关键：设置为垂直布局 */
+    padding: 12px 0;
+}
+
+/* 移除最后一个项目的下边框 */
+.inject-settings-card .setting-item-vertical:last-child {
+    border-bottom: none;
+}
+
+/* 设置项的头部 (包含标签和数字输入框) */
+.setting-item-header {
+    display: flex;
+    justify-content: space-between; /* 两端对齐 */
+    align-items: center;
+    margin-bottom: 10px; /* 与下面的滑块拉开距离 */
+}
+
+.setting-item-header label {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+/* 范围提示文字 (如 52k ~ 1m) */
+.range-hint {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-left: 5px;
+}
+
+/* 滑动条的容器 */
+.slider-container {
+    width: 100%;
+}
+
+/* 滑动条轨道样式 */
+.setting-item-vertical input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px; /* 轨道变细 */
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: opacity .2s;
+}
+
+/* 滑动条滑块样式 (之前已有的，这里确保存在) */
+.setting-item-vertical input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--primary-blue);
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* =============================================================== */
+/* ==================== 注入页面下拉菜单样式修复 =================== */
+/* =============================================================== */
+
+/* 让下拉菜单的父容器也使用 flex 布局 */
+.settings-nav-group .settings-nav-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 让下拉菜单靠右对齐，并给一个合适的宽度 */
+.settings-nav-item select {
+    text-align: right;
+    width: auto; /* 宽度自适应内容 */
+    min-width: 120px; /* 最小宽度，防止文字挤压 */
+    padding-right: 5px;
+}
+/* style.css */
+
+/* =============================================================== */
+/* ============== [调整] 对话设置卡片 & 标题间距 ============== */
+/* =============================================================== */
+
+/* 
+ * 目标: "对话设置" 所在的整个卡片
+ * 作用: 控制卡片内部所有内容与卡片边框的距离 (内边距)
+ * 你可以修改下面的 padding 值来调整。
+ * 例如: padding: 20px; 会让上下左右的间距都变大。
+*/
+.inject-settings-card {
+    padding: 15px; /* 示例: 将上下内边距调整为 15px */
+}
+
+/* 
+ * 目标: "对话设置" 这个标题本身
+ * 作用: 控制标题和下方第一个滑块之间的垂直距离 (下外边距)
+ * 你可以修改下面的 margin-bottom 值来调整。
+*/
+.inject-settings-card .settings-card-header {
+    margin-bottom: 0; /* 示例: 将标题下方的间距增加到 15px */
+}
+/* =============================================================== */
+/* ================== API 页面 Header 图标样式 =================== */
+/* =============================================================== */
+
+/* 为新的删除图标添加红色，使其具有警示性 */
+#page-api-settings #btn-delete-config {
+    color: #ff3b30;
+}
+
+/* 为新的保存图标添加点击反馈效果 */
+#page-api-settings #btn-save-config:active {
+    transform: scale(0.9);
+}
+
+/* 移除旧的按钮样式（可选，保持文件整洁） */
+/* 你可以删除或注释掉之前为 #btn-delete-config 和 #btn-save-config 按钮设置的背景色样式 */
+/* =============================================================== */
+/* =================== API 页面 Header 图标 & 布局 V2 ============== */
+/* =============================================================== */
+
+/* [新增] 用于包裹 label 和 “+” 图标的 flex 容器 */
+.form-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px; /* 保持和原 label 一样的下边距 */
+}
+
+/* [新增] “+” 图标按钮的样式 */
+#btn-new-config-icon {
+    font-size: 20px;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 5px; /* 增大点击区域 */
+    transition: transform 0.2s ease;
+}
+
+#btn-new-config-icon:active {
+    transform: scale(0.85);
+}
+
+/* [新增] 底部单个按钮的容器样式 */
+.api-actions-single {
+    margin-top: 25px;
+}
+
+/* [修改] 移除旧的网格布局，因为现在只有一个按钮了 */
+/* 你可以安全地删除或注释掉之前的 .api-actions-grid 样式 */
+.api-actions-grid {
+    /* display: grid; */
+    /* grid-template-columns: 1fr 1fr; */
+    /* gap: 15px; */
+    /* margin-top: 25px; */
+    display: none; /* 直接隐藏旧的，避免冲突 */
+}
+/* =============================================================== */
+/* =================== 注入管理页面 Header 图标样式 ================== */
+/* =============================================================== */
+
+/* 为新的删除图标添加红色，使其具有警示性 */
+#page-inject #btn-delete-prompt {
+    color: #ff3b30;
+}
+
+/* 为新的保存图标添加点击反馈效果 */
+#page-inject #btn-save-prompt:active {
+    transform: scale(0.9);
+}
+/* =============================================================== */
+/* ============ [修复] 移除注入页面选项设置的分割线 ============ */
+/* =============================================================== */
+
+/* 
+ * 专门为注入管理页面 (id="page-inject") 里的 .settings-nav-item 元素
+ * 设置样式，强制移除它的下边框，从而去掉分割线。
+*/
+#page-inject .settings-nav-item:not(:last-child) {
+    border-bottom: none;
+}
+/* =============================================================== */
+/* ============ [更新] 为聊天页状态添加 > 图标 ============ */
+/* =============================================================== */
+
+/* 
+ * 使用 ::after 伪元素和 Font Awesome 图标库来添加 chevron-right 图标。
+ * 这比使用文本字符 '>' 更清晰、更专业。
+*/
+.header-status::after {
+    /* 关键步骤: 指定使用 Font Awesome 字体 */
+    font-family: "Font Awesome 6 Free"; 
+    font-weight: 700; /* Solid 样式的图标需要设置这个权重 */
+    
+    /* 关键步骤: 插入 chevron-right 图标的 Unicode 编码 */
+    content: "\f054"; 
+    
+    /* 微调样式 */
+    font-size: 8px;
+    color: var(--text-secondary);
+    margin-left: 3px;
+    position: relative;
+    top: 0.5px; /* 图标通常对齐得更好，不需要-1px的微调了 */
+}
+/* =============================================================== */
+/* ================ 用户设置页面综合更新 ================= */
+/* =============================================================== */
+
+/* 1. 使只读输入框看起来不可编辑 */
+input[readonly] {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 2. 用户人设水平滑动标签栏样式 */
+.user-tags-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.user-settings-tags {
+    flex-grow: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 5px; /* 防止滚动条遮挡内容 */
+    margin-bottom: 0;
+}
+
+/* 隐藏滚动条 */
+.user-settings-tags::-webkit-scrollbar { display: none; }
+.user-settings-tags { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* 隐藏旧的 JS 生成的加号标签 */
+.user-settings-tags .add-tag {
+    display: none;
+}
+
+.add-tag-button-container {
+    flex-shrink: 0;
+}
+
+#add-user-profile-btn {
+    /* --- 核心调整区 --- */
+    font-size: 14px;  /* 控制"+"号的大小 (原为16px) */
+    padding: 6px;     /* 控制"+"号到边框的距离, 决定圆圈大小 (原为8px) */
+    width: 1.2em;     /* 宽度, em单位会随font-size变化, 无需修改 */
+    height: 1.2em;    /* 高度, em单位会随font-size变化, 无需修改 */
+    transform: translateY(-2px);
+    /* --- 保持不变的样式 --- */
+    color: var(--text-secondary);
+    cursor: pointer;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+#add-user-profile-btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* 3. 全局勾选卡片与开关(Toggle)样式 */
+.toggle-switch-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+.toggle-switch-item:not(:last-child) {
+    border-bottom: 1px solid var(--bg-color);
+}
+.toggle-switch-item span {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 51px;
+    height: 31px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 25px;
+    width: 25px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: var(--primary-blue);
+}
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+.slider.round {
+    border-radius: 34px;
+}
+.slider.round:before {
+    border-radius: 50%;
+}
+/* =============================================================== */
+/* ================ 应用范围卡片样式 (正确版本) ================ */
+/* =============================================================== */
+
+.character-binding-container {
+    display: none; /* 默认隐藏 */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-top: 5px;
+}
+
+.character-binding-container.visible {
+    display: flex; /* 当有 .visible 类时显示 */
+}
+
+.character-binding-container span {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+.character-binding-container select {
+    border: none;
+    background: none;
+    text-align: right;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--text-secondary);
+    min-width: 120px;
+    cursor: pointer;
+}
+
+.character-binding-container select:focus {
+    outline: none;
+    color: var(--text-primary);
+}
+/* =============================================================== */
+/* ================ 移除应用范围卡片内的分割线 ================ */
+/* =============================================================== */
+
+/* 
+ * 使用 :has() 伪类精确定位到包含“全局应用”开关的那个 .toggle-switch-item，
+ * 然后强制将其底边框设为 none，从而去掉分割线。
+*/
+.toggle-switch-item:has(#toggle-global-apply) {
+    border-bottom: none;
+}
+/* =============================================================== */
+/* ============= 新增: 角色列表项可点击样式 ============= */
+/* =============================================================== */
+
+/* 为角色分组列表中的每个角色条目添加手型光标，提示用户可以点击 */
+.contact-list .chat-item {
+    cursor: pointer;
+}
+
+/* 当鼠标悬停在可点击的角色条目上时，给一个细微的背景色变化作为反馈 */
+.contact-list .chat-item:hover {
+    background-color: #f9f9f9;
+}
+/* =============================================================== */
+/* ================== 已绑定用户卡片 & 工具样式 ================== */
+/* =============================================================== */
+
+/* 通用隐藏工具类 */
+.hidden {
+    display: none !important;
+}
+
+/* “已绑定用户”卡片中用户名的样式 */
+#bound-user-name {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+/* =============================================================== */
+/* ============= 调整“已绑定用户”卡片的大小 ============= */
+/* =============================================================== */
+
+/* 
+ * 通过 ID 选择器精确定位到“已绑定用户”卡片内的 .settings-nav-item 元素，
+ * 覆盖其默认的内边距和字体大小，使其看起来更紧凑。
+*/
+#bound-user-info-card .settings-nav-item {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 14px;
+}
+/* =============================================================== */
+/* ================== 全屏设定编辑器样式 ================== */
+/* =============================================================== */
+
+/* 让设定卡片右上角的“展开”图标可点击，并有悬浮效果 */
+.settings-card-header .fa-expand {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+.settings-card-header .fa-expand:hover {
+    transform: scale(1.1);
+}
+
+/* 全屏编辑器的内容区域样式 */
+.fullscreen-editor-content {
+    display: flex; /* 使用 Flexbox 布局 */
+    flex-direction: column;
+    height: 100%; /* 占满父容器高度 */
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* 全屏编辑器的文本域样式 */
+#fullscreen-editor-textarea {
+    flex-grow: 1; /* 关键：让文本域填满所有可用垂直空间 */
+    width: 100%;
+    border: none;
+    background: none;
+    resize: none;
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: inherit;
+    color: var(--text-primary);
+}
+
+#fullscreen-editor-textarea:focus {
+    outline: none; /* 移除焦点时的边框 */
+}
+/* style.css */
+
+/* =============================================================== */
+/* ============= [新增] 统一 “添加配置/提示词” 图标样式 ============= */
+/* =============================================================== */
+
+/*
+ * 这个样式会同时作用于 “API管理” 和 “注入管理” 页面
+ * 顶部的“+”号添加按钮，让它们外观统一。
+*/
+#btn-new-config-icon,
+#btn-new-prompt-icon {
+    /* --- 核心调整区 --- */
+    font-size: 16px;      /* <-- 在这里调整“+”号图标的大小 */
+    padding: 5px;         /* <-- 在这里调整图标到边框的距离，决定圆圈的大小 */
+
+    /* --- 基础样式 (通常无需改动) --- */
+    color: var(--text-secondary);
+    cursor: pointer;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 1.2em; /* 宽度会根据 font-size 自动调整 */
+    height: 1.2em;/* 高度会根据 font-size 自动调整 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+#btn-new-config-icon:hover,
+#btn-new-prompt-icon:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+}
+
+#btn-new-config-icon:active,
+#btn-new-prompt-icon:active {
+    transform: scale(0.95);
+}
+/* style.css */
+
+/* =============================================================== */
+/* ================ [新增] 微调“添加”图标垂直对齐 ================ */
+/* =============================================================== */
+
+/*
+ * 目标：让“API管理”和“注入管理”页面的“+”号图标，
+ *       与其左侧的文字标签在视觉上更完美地垂直居中。
+*/
+#btn-new-config-icon,
+#btn-new-prompt-icon {
+    /* --- 核心调整 --- */
+    transform: translateY(-3px); /* 向上移动2个像素 */
+}
+/* style.css */
+
+/* =============================================================== */
+/* ================ [新增] 注入设置卡片锁定功能样式 ================ */
+/* =============================================================== */
+
+/* 1. 让锁图标变得可点击，并添加过渡效果 */
+#toggle-inject-lock {
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    color: var(--text-secondary); /* 默认灰色 */
+}
+
+#toggle-inject-lock:hover {
+    transform: scale(1.1);
+}
+
+/* 当图标是“开锁”状态时，显示主题蓝色 */
+#toggle-inject-lock.fa-lock-open {
+    color: var(--primary-blue);
+}
+
+/* 2. 定义卡片被锁住时的样式 */
+/* 当 .inject-settings-card 拥有 .locked 类时: */
+.inject-settings-card.locked .setting-item-vertical {
+    opacity: 0.5; /* 让内部所有设置项变半透明 */
+    pointer-events: none; /* 关键：禁止所有鼠标事件，如点击、滑动 */
+    transition: opacity 0.3s ease;
+}
+
+/* 当卡片未锁定时，恢复正常 */
+.inject-settings-card .setting-item-vertical {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
+}
+/* style.css */
+
+/* =============================================================== */
+/* ===================== [新增] 对话界面样式 ===================== */
+/* =============================================================== */
+
+/* 让聊天列表中的角色条目可点击，并有悬浮反馈 */
+#page-messages .chat-list .chat-item[data-char-id] {
+    cursor: pointer;
+}
+#page-messages .chat-list .chat-item[data-char-id]:hover {
+    background-color: #f9f9f9;
+}
+
+/* 聊天区域，占满除头部和输入框外的所有空间 */
+#page-chat-interface .chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: var(--bg-color); /* 设置与应用背景一致的颜色 */
+}
+
+/* 消息气泡通用样式 */
+.message-bubble {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    max-width: 80%;
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.message-content {
+    background-color: var(--white-color);
+    border-radius: 18px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.message-content p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    /* 允许长单词或链接换行 */
+    word-break: break-word;
+}
+
+/* 接收到的消息 (对方发的) */
+.message-bubble.received {
+    align-self: flex-start;
+}
+.message-bubble.received .message-content {
+    border-top-left-radius: 5px;
+}
+
+/* 发送的消息 (我发的) */
+.message-bubble.sent {
+    align-self: flex-end;
+}
+.message-bubble.sent .message-content {
+    background-color: var(--primary-blue);
+    border-top-right-radius: 5px;
+}
+.message-bubble.sent .message-content p {
+    color: var(--white-color);
+}
+
+
+/* 底部输入栏 */
+.chat-input-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 15px;
+    background-color: #F8F8F8;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.chat-input-bar input {
+    flex-grow: 1;
+    border: none;
+    background-color: var(--white-color);
+    border-radius: 18px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: inherit;
+}
+.chat-input-bar input:focus {
+    outline: none;
+}
+
+.chat-input-bar i {
+    font-size: 24px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.chat-input-bar i:hover {
+    color: var(--text-primary);
+}
