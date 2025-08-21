@@ -2630,6 +2630,6 @@ html, body {
 
 /* 确保页面头部为状态栏留出空间 */
 .page-overlay .user-settings-header {
-    padding-top: 77px; /* 原来是45px，增加32px给状态栏 */
+    padding-top: 45px; /* 原来是45px，增加32px给状态栏 */
 }
 
